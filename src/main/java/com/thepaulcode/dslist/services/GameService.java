@@ -5,6 +5,7 @@ import com.thepaulcode.dslist.dto.GameListDTO;
 import com.thepaulcode.dslist.dto.GameMinDTO;
 import com.thepaulcode.dslist.entities.Game;
 import com.thepaulcode.dslist.entities.GameList;
+import com.thepaulcode.dslist.projections.GameMinProjection;
 import com.thepaulcode.dslist.repositories.GameListRepository;
 import com.thepaulcode.dslist.repositories.GameRepository;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,13 @@ public class GameService {
         Game game = repository.findById(id).get();
 
         return new GameDTO(game);
+    }
+
+    @Transactional(readOnly = true)
+    public List<GameMinDTO> findByLists(Long listId){
+        List<GameMinProjection> gameMinProjectionsList = repository.searchByList(listId);
+        List<GameMinDTO> gameMinDTOList = gameMinProjectionsList.stream().map(GameMinDTO::new).toList();
+        return gameMinDTOList;
     }
 
 }

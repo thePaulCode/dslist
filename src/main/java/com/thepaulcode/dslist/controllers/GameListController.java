@@ -1,6 +1,5 @@
 package com.thepaulcode.dslist.controllers;
 
-import com.thepaulcode.dslist.dto.GameDTO;
 import com.thepaulcode.dslist.dto.GameListDTO;
 import com.thepaulcode.dslist.dto.GameMinDTO;
 import com.thepaulcode.dslist.services.GameListService;
@@ -17,13 +16,22 @@ import java.util.List;
 public class GameListController {
 
     private final GameListService service;
+    private final GameService gameService;
 
-    public GameListController(GameListService service){
+    public GameListController(GameListService service, GameService gameService){
         this.service = service;
+        this.gameService = gameService;
     }
 
     @GetMapping()
     public List<GameListDTO> findAllLists(){
         return service.findAllList();
+    }
+
+    @GetMapping("/{listId}/games")
+    public List<GameMinDTO> findByList(@PathVariable Long listId){
+
+        List<GameMinDTO> gameMinDTOList = gameService.findByLists(listId);
+        return gameMinDTOList;
     }
 }
