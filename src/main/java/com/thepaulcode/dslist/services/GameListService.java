@@ -13,26 +13,21 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class GameService {
-    
-    private final GameRepository repository;
-    
-    public GameService(GameRepository repository){
-        this.repository = repository;
+public class GameListService {
+
+    private final GameListRepository gameListRepository;
+
+    public GameListService(GameListRepository gameListRepository){
+
+        this.gameListRepository = gameListRepository;
     }
 
     @Transactional(readOnly = true)
-    public List<GameMinDTO> findAll(){
-        List<Game> gameList = repository.findAll();
-        List<GameMinDTO> dto = gameList.stream().map(GameMinDTO::new).toList();
-        return dto;
-    }
+    public List<GameListDTO> findAllList() {
+        List<GameList> gameList = gameListRepository.findAll();
+        List<GameListDTO> gameListDTOS = gameList.stream().map(GameListDTO::new).toList();
 
-    @Transactional(readOnly = true)
-    public GameDTO findById(Long id){
-        Game game = repository.findById(id).get();
-
-        return new GameDTO(game);
+        return  gameListDTOS;
     }
 
 }
