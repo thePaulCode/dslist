@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface GameRepository extends JpaRepository<Game, Long> {
 
     @Query(nativeQuery = true, value = """
-                    select tb_game.id, tb_game.title, tb_game.game_year as `year`,tb_game.img_url as imgUrl, tb_game.short_description as shortdesc, tb_belonging.position
+                    select tb_game.id, tb_game.title, tb_game.game_year as gameYear,tb_game.img_url as imgUrl, tb_game.short_description as shortdesc, tb_belonging.position
                     from tb_game
                     inner join tb_belonging on tb_game.id = tb_belonging.game_id
                     where tb_belonging.list_id = :listId
